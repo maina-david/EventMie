@@ -1,0 +1,21 @@
+/public/hot
+/public/storage
+/storage/*.key
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
+
+# OSX Specific files
+.DS_Store
+/__MACOXS
+
+# Vscode Specific files
+/.vscode
+
+/vendor
+/node_modules
+/images
+
+**/dist
