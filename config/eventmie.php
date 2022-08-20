@@ -108,7 +108,7 @@ return [
     */
 
     'controllers' => [
-        'namespace' => NULL,
+        'namespace' => 'App\\Http\\Controllers\\Eventmie',
     ],
 
 
