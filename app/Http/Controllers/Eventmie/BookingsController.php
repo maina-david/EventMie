@@ -433,12 +433,12 @@ class BookingsController extends BaseBookingsController
                 "ApiKey" =>  setting('apps.tinypesa_apikey'),
                 "Accept" =>  "application/json"
     
-            ])->withOptions(["verify"=>false])->post('https://www.tinypesa.com/api/v1/express/initialize', [
+            ])->withOptions(["verify" => false])->post('https://www.tinypesa.com/api/v1/express/initialize', [
                 'amount' => $order['price'],
                 'msisdn' => session('payment_method')['customer_phone'],
                 
             ]);
-            dd('response',$response->json());
+            
             if($response->json()['success'] == true)
             {
  
@@ -458,13 +458,12 @@ class BookingsController extends BaseBookingsController
             }
         } 
         catch(\Exception $e) {
-            dd('error',$e->getMessage());
+            
             $flag = [
                 'status'    => false,
                 'error'     => $e->getMessage(),
             ];
         }
-        dd('final',$flag);
 
         return $this->finish_checkout($flag);
     }
