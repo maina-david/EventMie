@@ -458,13 +458,13 @@ class BookingsController extends BaseBookingsController
             }
         } 
         catch(\Exception $e) {
-            dd('error',$response->json());
+            dd('error',$e->getMessage());
             $flag = [
                 'status'    => false,
                 'error'     => $e->getMessage(),
             ];
         }
-        dd('final',$response->json());
+        dd('final',$flag);
 
         return $this->finish_checkout($flag);
     }
