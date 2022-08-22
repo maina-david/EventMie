@@ -438,7 +438,7 @@ class BookingsController extends BaseBookingsController
                 'msisdn' => session('payment_method')['customer_phone'],
                 
             ]);
-            
+            dd('response',$response->json());
             if($response->json()['success'] == true)
             {
  
@@ -458,12 +458,13 @@ class BookingsController extends BaseBookingsController
             }
         } 
         catch(\Exception $e) {
-            
+            dd('error',$response->json());
             $flag = [
                 'status'    => false,
                 'error'     => $e->getMessage(),
             ];
         }
+        dd('final',$response->json());
 
         return $this->finish_checkout($flag);
     }
