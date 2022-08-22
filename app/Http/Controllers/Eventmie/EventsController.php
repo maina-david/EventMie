@@ -29,7 +29,9 @@ class EventsController extends BaseEventsController
      */
     public function show(\Classiebit\Eventmie\Models\Event $event, $view = 'vendor.eventmie-pro.events.show', $extra = [])
     {
-        if(!empty(env('TINY_PESA_API_KEY')))
+        $extra['is_tiny_pesa']     = 0; 
+        
+        if(!empty(setting('apps.tinypesa_apikey')))
             $extra['is_tiny_pesa']     = true; 
         
         return parent::show($event, $view, $extra);

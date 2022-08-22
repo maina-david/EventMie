@@ -798,6 +798,11 @@ class SettingsTableSeeder extends Seeder
             ]), "type" => "select_dropdown", "order" => "46", "group" => "Regional", ])->save();
         }
 
+        $setting = $this->findSetting("apps.tinypesa_apikey");
+        if (!$setting->exists) {
+            $setting->fill(["display_name" => "TinyPesa Api Key", "value" => "", "details"=> null, "type" => "text", "order" => "51", "group" => "Apps", ])->save();
+        }
+
     }
 
     /**

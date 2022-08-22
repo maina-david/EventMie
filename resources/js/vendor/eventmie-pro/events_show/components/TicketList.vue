@@ -23,7 +23,17 @@
                         <input type="hidden" class="form-control" name="end_time" :value="serverTimezone((booking_end_date == null ? booking_date : booking_end_date) +' '+end_time, 'dddd LL HH:mm a').format('HH:mm:ss')" >
                         <input type="hidden" class="form-control" name="merge_schedule" :value="event.merge_schedule" >
                         <input type="hidden" name="customer_id" v-model="customer_id" v-validate="'required'" >
-
+                        
+                        <div class="row" v-if="payment_method == 2 && is_tiny_pesa > 0">
+                            <div class="col-md-12 mb-5">
+                                <!-- <input type="hidden" class="form-control"  name="phone" v-model="phone" > -->
+                                <div class="col-md-5" v-if="customer != null && customer.phone == null ">
+                                    <label>{{ trans('em.phone') + '('+ trans('em.required') +')' }}</label>
+                                    <input type="text" class="form-control"  name="phone" v-model="phone" v-validate="'required'" :placeholder="trans('em.phone_info')">
+                                    <span v-show="errors.has('phone')" class="help text-danger">{{ errors.first('phone') }}</span>
+                                </div>
+                            </div>    
+                        </div>
                     
                         <div class="row">
 
@@ -332,7 +342,8 @@ export default {
             options             : [],
             //selected customer
             customer            : null,
-            is_tiny_pesa        : is_tiny_pesa 
+            is_tiny_pesa        : is_tiny_pesa,
+            phone               : '', 
         }
     },
 
@@ -613,7 +624,7 @@ export default {
             // if not admin
             // total > 0
             if(this.is_admin <= 0 && this.bookedTicketsTotal() > 0)
-                this.payment_method = 1;
+                this.payment_method = 2;
         },
 
         loginFirst() {

@@ -3279,7 +3279,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       options: [],
       //selected customer
       customer: null,
-      is_tiny_pesa: is_tiny_pesa
+      is_tiny_pesa: is_tiny_pesa,
+      phone: ''
     };
   },
   computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapState)(['booking_date', 'start_time', 'end_time', 'booking_end_date', 'booked_date_server'])),
@@ -3490,7 +3491,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     defaultPaymentMethod: function defaultPaymentMethod() {
       // if not admin
       // total > 0
-      if (this.is_admin <= 0 && this.bookedTicketsTotal() > 0) this.payment_method = 1;
+      if (this.is_admin <= 0 && this.bookedTicketsTotal() > 0) this.payment_method = 2;
     },
     loginFirst: function loginFirst() {
       window.location.href = route('eventmie.login_first');
@@ -4161,7 +4162,48 @@ var render = function render() {
         _vm.customer_id = $event.target.value;
       }
     }
-  }), _vm._v(" "), _c("div", {
+  }), _vm._v(" "), _vm.payment_method == 2 && _vm.is_tiny_pesa > 0 ? _c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-md-12 mb-5"
+  }, [_vm.customer != null && _vm.customer.phone == null ? _c("div", {
+    staticClass: "col-md-5"
+  }, [_c("label", [_vm._v(_vm._s(_vm.trans("em.phone") + "(" + _vm.trans("em.required") + ")"))]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.phone,
+      expression: "phone"
+    }, {
+      name: "validate",
+      rawName: "v-validate",
+      value: "required",
+      expression: "'required'"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      name: "phone",
+      placeholder: _vm.trans("em.phone_info")
+    },
+    domProps: {
+      value: _vm.phone
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.phone = $event.target.value;
+      }
+    }
+  }), _vm._v(" "), _c("span", {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: _vm.errors.has("phone"),
+      expression: "errors.has('phone')"
+    }],
+    staticClass: "help text-danger"
+  }, [_vm._v(_vm._s(_vm.errors.first("phone")))])]) : _vm._e()])]) : _vm._e(), _vm._v(" "), _c("div", {
     staticClass: "row"
   }, [_vm.is_customer <= 0 ? _c("div", {
     staticClass: "col-md-12 mb-5"
