@@ -433,7 +433,7 @@ class BookingsController extends BaseBookingsController
                 "ApiKey" =>  setting('apps.tinypesa_apikey'),
                 "Accept" =>  "application/json"
     
-            ])->post('https://www.tinypesa.com/api/v1/express/initialize', [
+            ])->withOptions(["verify"=>false])->post('https://www.tinypesa.com/api/v1/express/initialize', [
                 'amount' => $order['price'],
                 'msisdn' => session('payment_method')['customer_phone'],
                 
