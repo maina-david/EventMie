@@ -3563,6 +3563,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.openModal = true;
     this.setDefaultQuantity();
     this.defaultPaymentMethod();
+
+    if (this.is_customer > 0) {
+      this.customer = customer;
+    }
   }
 });
 
@@ -4166,7 +4170,7 @@ var render = function render() {
     staticClass: "row"
   }, [_c("div", {
     staticClass: "col-md-12 mb-5"
-  }, [_vm.customer != null && _vm.customer.phone == null ? _c("div", {
+  }, [_vm.customer != null && (_vm.customer.phone == null || _vm.customer.phone == "") ? _c("div", {
     staticClass: "col-md-5"
   }, [_c("label", [_vm._v(_vm._s(_vm.trans("em.phone") + "(" + _vm.trans("em.required") + ")"))]), _vm._v(" "), _c("input", {
     directives: [{

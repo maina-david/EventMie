@@ -4,6 +4,7 @@
 
 <script type="text/javascript">
     var is_tiny_pesa              = {!! json_encode( $extra['is_tiny_pesa']) !!};
+    var customer                  = {!! json_encode( $extra['customer']) !!};
 
 </script>
 

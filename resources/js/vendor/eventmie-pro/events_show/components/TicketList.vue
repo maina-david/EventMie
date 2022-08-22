@@ -27,7 +27,7 @@
                         <div class="row" v-if="payment_method == 2 && is_tiny_pesa > 0">
                             <div class="col-md-12 mb-5">
                                 <!-- <input type="hidden" class="form-control"  name="phone" v-model="phone" > -->
-                                <div class="col-md-5" v-if="customer != null && customer.phone == null ">
+                                <div class="col-md-5" v-if="customer != null && (customer.phone == null || customer.phone == '')  ">
                                     <label>{{ trans('em.phone') + '('+ trans('em.required') +')' }}</label>
                                     <input type="text" class="form-control"  name="phone" v-model="phone" v-validate="'required'" :placeholder="trans('em.phone_info')">
                                     <span v-show="errors.has('phone')" class="help text-danger">{{ errors.first('phone') }}</span>
@@ -712,6 +712,10 @@ export default {
         this.openModal = true;
         this.setDefaultQuantity();
         this.defaultPaymentMethod();
+
+        if(this.is_customer > 0) {
+            this.customer = customer
+        }
     },
 }
 </script>

@@ -33,7 +33,15 @@ class EventsController extends BaseEventsController
         
         if(!empty(setting('apps.tinypesa_apikey')))
             $extra['is_tiny_pesa']     = true; 
+
+        $customer = [];
+        if(Auth::check() && Auth::user()->hasRole('customer'))
+        {
+            $customer = Auth::user();
+        }
         
+        $extra['customer'] = $customer;
+
         return parent::show($event, $view, $extra);
     }
 }
