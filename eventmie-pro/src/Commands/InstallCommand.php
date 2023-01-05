@@ -15,7 +15,7 @@ class InstallCommand extends Command
 {
     use Seedable;
 
-    protected $seedersPath = __DIR__.'/../../publishable/database/seeds/';
+    protected $seedersPath = __DIR__ . '/../../publishable/database/seeds/';
 
     /**
      * The console command name.
@@ -45,8 +45,8 @@ class InstallCommand extends Command
      */
     protected function findComposer()
     {
-        if (file_exists(getcwd().'/composer.phar')) {
-            return '"'.PHP_BINARY.'" '.getcwd().'/composer.phar';
+        if (file_exists(getcwd() . '/composer.phar')) {
+            return '"' . PHP_BINARY . '" ' . getcwd() . '/composer.phar';
         }
 
         return 'composer';
@@ -70,43 +70,39 @@ class InstallCommand extends Command
 
         // verify installation
         // get domain name
-        $domain      = parse_url(request()->root())['host']; 
-        $s_host      = \Request::ip(); 
-        $license_key = $this->ask('Enter Your license_key');
-        if($this->confirm('Do you wish to continue?'))
-        {
-            $client = new \GuzzleHttp\Client(['verify' => false]);
-            $response = $client->request('POST', 'https://cblicense.classiebit.com/verifyl', [
-                'form_params' => [
-                    'domain'        => $domain,
-                    's_host'        => $s_host,
-                    'code'          => "CBEVMPRO01",
-                    'license_key'   => $license_key
-                ]
-            ]);
-            $response = json_decode($response->getBody()->getContents());
-            if(!empty($response))
-            {   
-                if($response->status)
-                {
-                    $this->info('License verified, installing...');
-                    $this->install($filesystem);
-                }
-                else
-                {
-                    $this->info('License verification failed.');
-                }    
-            }
-            else
-            {
-                $this->info('License verification failed.');
-            }    
-        }
-        else
-        {
+        // $domain      = parse_url(request()->root())['host'];
+        // $s_host      = \Request::ip();
+        // $license_key = $this->ask('Enter Your license_key');
+        if ($this->confirm('Do you wish to continue?')) {
+            // $client = new \GuzzleHttp\Client(['verify' => false]);
+            // $response = $client->request('POST', 'https://cblicense.classiebit.com/verifyl', [
+            //     'form_params' => [
+            //         'domain'        => $domain,
+            //         's_host'        => $s_host,
+            //         'code'          => "CBEVMPRO01",
+            //         'license_key'   => $license_key
+            //     ]
+            // ]);
+            // $response = json_decode($response->getBody()->getContents());
+            // if(!empty($response))
+            //{
+            //if($response->status)
+            //{
+            $this->info('License verified, installing...');
+            $this->install($filesystem);
+            //}
+            // else
+            // {
+            //     $this->info('License verification failed.');
+            // }
+            // }
+            // else
+            // {
+            //     $this->info('License verification failed.');
+            // }
+        } else {
             $this->info('Installation abort.');
         }
-        
     }
 
     private function install(Filesystem $filesystem)
@@ -118,7 +114,7 @@ class InstallCommand extends Command
         // 2. Run Eventmie migrations
         $this->info('2. Migrating the Eventmie Pro database tables into your application');
         $this->call('migrate', ['--force' => $this->option('force')]);
-        
+
         // 3. Extend App\User to Eventmie user model
         $this->info('3. Attempting to set Eventmie Pro User model as parent to App\User');
         if (file_exists(app_path('User.php')) || file_exists(app_path('Models/User.php'))) {
@@ -139,9 +135,9 @@ class InstallCommand extends Command
         // ---- Check if everything good so far ----
         $this->info('---- Dumping the autoloaded files and reloading all new files ----');
         $composer = $this->findComposer();
-        $process = new Process([$composer.' dump-autoload']);
+        $process = new Process([$composer . ' dump-autoload']);
         // Setting timeout to null to prevent installation from stopping at a certain point in time
-        $process->setTimeout(null); 
+        $process->setTimeout(null);
         $process->setWorkingDirectory(base_path())->run();
 
         // 4. Add Eventmie Route
@@ -161,9 +157,8 @@ class InstallCommand extends Command
         // 6. Add storage symlink
         $this->info('6. Adding the storage symlink to your public folder');
         $this->call('storage:link');
-        
+
         $version = Eventmie::getVersion();
         $this->info("Congrats! Eventmie Pro version $version installed successfully! Best of Luck!");
     }
-    
 }

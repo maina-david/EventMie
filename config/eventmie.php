@@ -46,6 +46,7 @@ return [
         'ja',
         'nl',
         'ru',
+        'pt',
         'zh_CN',
         'zh_TW',
     ],
@@ -108,7 +109,7 @@ return [
     */
 
     'controllers' => [
-        'namespace' => 'App\\Http\\Controllers\\Eventmie',
+        'namespace' => NULL,
     ],
 
 
